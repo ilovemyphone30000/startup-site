@@ -2,13 +2,13 @@
 
 NYU Entrepreneurship for the Music Industry, Fall 2026 class project. Team: Jonah, Daniel, Ronnie and Dylan.
 
-A static site with two parts, built to look real for a class presentation and to test interest. **Every person, artist, venue and number is fictional demo data.** No backend, no logins, no payments.
+A static site with two parts, built to look real for a class presentation and to test interest. **Every fan, venue, date and number is made up.** The four artist names (Samba Jean-Baptiste, Greg Freeman, Westside Cowboy, Telescreens) are placeholders for the demo, and nothing here describes their real shows or sales. No backend, no logins, no payments.
 
 | Route | What it is |
 |---|---|
 | `#/` | Landing page: problem, how it works, pricing, comparison, waitlist |
 | `#/fan` | **Consumer fan site** (mobile first): shows feed, referral links and QR, **Fan Score**, data entry, Sources, rewards ladder, leaderboard, pass the torch |
-| `#/agent` | **B2B backend** (desktop first): overview, tour dates, attribution, cost, data entry |
+| `#/agent` | **Agent/Artist Backend** (B2B, desktop first): overview, tour dates, attribution, cost, data entry |
 | `#/partner` | Reseller view: the $1.00 vs $1.25 split |
 
 Fan and agent sides share one small localStorage store, so a friend purchase in the fan app shows up in the agent attribution table, and a tour date an agent enters shows up in the fan feed.
@@ -48,7 +48,7 @@ Chosen: **Plus 1**. Other ideas we had (none checked for trademarks or domains):
 
 ## What is mocked
 
-- All artists, venues, cities' shows, fans, handles, sales numbers and referral attribution (`src/data/`). Dates are relative to today so the demo never goes stale.
+- All shows, venues, fans, handles, sales numbers and referral attribution (the four artist names are placeholders) (`src/data/`). Dates are relative to today so the demo never goes stale.
 - Referral links and QR codes use `ref.example.com`, a reserved domain that never resolves.
 - Waitlist forms, fan entries, agent entries and "activate superfans" write to localStorage only. Nothing is sent. Reset from the fan Profile section or the agent Enter data tab.
 - Fan Score, the rewards ladder, the leaderboard and the projected lift model are simple mock formulas (`src/config.ts`, `src/lib/derive.ts`).
