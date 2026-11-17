@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from 'react'
 import { Page } from '../components/Layout'
+import { RoachCursor, RoachEgg } from '../components/RoachEgg'
 import { Bar, DemoTag, Field, RiskFlag, Table } from '../components/ui'
 import { PRICING, TICKET_PRICE, directPerTicket } from '../config'
 import { cities, cityName } from '../data/cities'
@@ -349,6 +350,9 @@ export default function Agent() {
   const goActivate = (id: string) => { setSel(id); setTab('dates') }
 
   return (
+    <>
+    <RoachEgg />
+    <RoachCursor />
     <Page art={56} hero={
       <>
         <h1 className="m-0 text-xl font-bold">Agent/Artist Backend</h1>
@@ -371,5 +375,6 @@ export default function Agent() {
         </div>
       </div>
     </Page>
+    </>
   )
 }

@@ -562,8 +562,10 @@ export default function Fan() {
   const s = useStore()
   const [tab, setTab] = useState<Tab>('shows')
   const [msg, setMsg] = useState('')
-  const { score } = fanStats(s)
+  const stats = fanStats(s)
+  const score = stats.score
   const { cur, next } = tierFor(score)
+  const artistName = new Map(getArtists(s).map((a) => [a.id, a.name]))
   const tabsRef = useRef<HTMLDivElement>(null)
   const go = (t: Tab) => {
     setTab(t)
@@ -576,7 +578,8 @@ export default function Fan() {
         <h1 className="m-0 text-xl font-bold">Fan app demo</h1>
       </>
     }>
-      <div className="fan-view mx-auto grid max-w-2xl gap-5 px-4 py-5">
+      <div className="fan-view mx-auto grid max-w-5xl gap-5 px-4 py-5 lg:grid-cols-[minmax(0,42rem)_17rem] lg:items-start lg:justify-center">
+        <div className="grid min-w-0 gap-5">
         <section aria-label="Your Fan Score" className="border-2 border-ink bg-accent px-4 py-4">
           <p className="m-0 text-sm">Fan Score</p>
           <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
@@ -584,6 +587,16 @@ export default function Fan() {
             <p className="m-0 text-2xl font-bold leading-none">{cur ? cur.name : 'No tier yet'}</p>
           </div>
           <p className="mb-2 mt-2 text-sm">{next ? `Next: ${next.name} at ${next.at}.` : 'Top tier.'}</p>
+          {stats.dayOne.length > 0 && (
+            <div className="mb-1 flex flex-wrap items-center gap-2 text-sm lg:hidden">
+              <strong>Badges</strong>
+              {stats.dayOne.map((id) => (
+                <span key={id} className="inline-block border-2 border-ink bg-paper px-2 py-0.5 font-bold uppercase">
+                  Day one: {artistName.get(id) ?? id}
+                </span>
+              ))}
+            </div>
+          )}
           <ScoreMeter score={score} />
           <div className="mt-3 max-w-xs">
             <Field label="Your city or campus">
@@ -621,6 +634,27 @@ export default function Fan() {
         {tab === 'board' && <BoardTab />}
         {tab === 'torch' && <TorchTab notify={setMsg} />}
         </div>
+        </div>
+
+        <aside aria-labelledby="side-badges" className="hidden border-2 border-ink lg:sticky lg:top-4 lg:block">
+          <h2 id="side-badges" className="m-0 border-b-2 border-ink bg-accent px-4 py-3 text-base font-bold">My badges</h2>
+          <ul className="m-0 grid list-none gap-3 p-4">
+            {stats.dayOne.map((id) => {
+              const d = dayOneDetails(s).get(id)
+              return (
+                <li key={id} className="border-2 border-ink p-3">
+                  <span className="inline-block bg-ink px-2 text-xs font-bold uppercase text-paper">Day one</span>
+                  <p className="m-0 mt-1 font-bold">{artistName.get(id) ?? id}</p>
+                  <p className="mb-0 mt-1 text-xs">
+                    First followed: {d?.followed ? fmtDateLong(d.followed) : 'not found yet'}<br />
+                    First show: {d?.firstShow ? fmtDateLong(d.firstShow) : 'not logged yet'}
+                  </p>
+                </li>
+              )
+            })}
+          </ul>
+          <p className="m-0 border-t border-ink px-4 py-3 text-xs">Follow or see an artist early and log it to earn more Day one badges.</p>
+        </aside>
       </div>
     </Page>
   )

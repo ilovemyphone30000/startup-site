@@ -111,13 +111,13 @@ export default function Landing() {
             secondary or college market, we activate the local superfans and students who already bring friends, track every
             ticket they drive, and reward them. Booking agents and managers pay per ticket that sells. Fans pay nothing.
           </h1>
-          <div className="mt-5 flex flex-wrap gap-3">
-            <Link className="btn btn-solid" to="/fan">I'm a fan</Link>
-            <Link className="btn" to="/agent">I'm an agent / manager</Link>
-          </div>
         </>
       }
     >
+      <div className="flex flex-wrap justify-center gap-4 px-4 py-8">
+        <Link className="btn btn-solid px-8 py-3 text-lg" to="/fan">I'm a fan</Link>
+        <Link className="btn px-8 py-3 text-lg" to="/agent">I'm an agent / manager</Link>
+      </div>
       <Section id="problem" title="The problem" open>
         <div className="grid gap-8 md:grid-cols-2">
           <SeatGrid sold={home.sold} capacity={home.capacity} label="Home market show"
