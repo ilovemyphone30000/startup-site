@@ -1,5 +1,5 @@
 import { useSyncExternalStore } from 'react'
-import { STORE_KEY } from '../config'
+import { EGG_ROACH_KEY, STORE_KEY } from '../config'
 import { SEED_LOGGED } from '../data/fans'
 import type { AgentState, FanState, State } from '../data/types'
 
@@ -46,4 +46,7 @@ export const patchFan = (p: Partial<FanState> | ((f: FanState) => Partial<FanSta
   update((s) => ({ ...s, fan: { ...s.fan, ...(typeof p === 'function' ? p(s.fan) : p) } }))
 export const patchAgent = (p: Partial<AgentState> | ((a: AgentState) => Partial<AgentState>)) =>
   update((s) => ({ ...s, agent: { ...s.agent, ...(typeof p === 'function' ? p(s.agent) : p) } }))
-export function resetAll() { state = init(); save(state); emit() }
+export function resetAll() {
+  state = init(); save(state); emit()
+  try { localStorage.removeItem(EGG_ROACH_KEY) } catch { /* ignore */ }
+}
