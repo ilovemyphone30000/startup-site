@@ -6,6 +6,7 @@
   --color-ink: #272727;
   --color-mute: #595959;
   --color-risk: #b3121f;
+  --color-accent: #8fcbff; /* light blue, used only inside the fan view */
   --font-mono: "Courier Prime", ui-monospace, "SFMono-Regular", Menlo, monospace;
   --font-sans: Helvetica, "Helvetica Neue", Arial, system-ui, sans-serif;
   --font-display: "Anton", Impact, "Arial Narrow", sans-serif;
@@ -42,4 +43,15 @@ body {
   .tbl td { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--color-ink); vertical-align: top; }
   .tbl td.num, .tbl th.num { text-align: right; font-variant-numeric: tabular-nums; }
   .cell { border-left: 1px solid var(--color-ink); padding: 0.75rem 1rem; }
+
+  /* Fan view: light blue accent with dark text, so contrast stays high. */
+  .fan-view .btn-solid,
+  .fan-view .btn[aria-current="true"],
+  .fan-view .btn[aria-pressed="true"] { background: var(--color-accent); color: var(--color-ink); }
+  .fan-view .btn:hover,
+  .fan-view .btn-solid:hover { background: var(--color-ink); color: var(--color-paper); }
 }
+
+/* Unlayered so it beats Tailwind's bg-ink utility on the bar fill. */
+.fan-view [role="progressbar"] > div:not(.bg-risk) { background: var(--color-accent); }
+.fan-view [role="progressbar"] { background: var(--color-paper); }
