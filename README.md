@@ -2,7 +2,7 @@
 
 NYU Entrepreneurship for the Music Industry, Fall 2026 class project. Team: Jonah, Daniel, Ronnie and Dylan.
 
-A static site with two parts, built to look real for a class presentation and to test interest. **Every fan, venue, date and number is made up.** The four artist names (Samba Jean-Baptiste, Greg Freeman, Westside Cowboy, Telescreens) are placeholders for the demo, and nothing here describes their real shows or sales. No backend, no logins, no payments.
+A static site with two parts, built to look real for a class presentation and to test interest. **Every fan, venue, date and number is made up.** The four artist names (Samba Jean-Baptiste, Greg Freeman, Westside Cowboy, Telescreens, Geese) are placeholders for the demo, and nothing here describes their real shows or sales. No backend, no logins, no payments.
 
 | Route | What it is |
 |---|---|
@@ -65,6 +65,7 @@ Researched in November 2026. Re-check before building.
 | Spotify | Fan uploads their **Extended streaming history** (Account, Privacy, Download your data). | The Web API returns only the last 50 plays. New apps are capped at 5 allowlisted users, and extended access needs a registered business with 250k+ monthly users. The export can take up to about 30 days. |
 | Last.fm | Public profile read with a free API key (`user.getTopArtists`, `user.getRecentTracks`). | The API allows browser calls (`access-control-allow-origin: *`). Fans who scrobble Spotify get full dated history. The key is visible in browser code, so use a small proxy for production. |
 | Instagram | Fan uploads `following.json` from **Download your information** (JSON, All time). | No API gives follow dates. Each entry has a unix timestamp. The filename and layout vary between exports, so the parser accepts several. |
+| Setlist.fm | Public API (free key) lists concerts a member has marked as attended, with dates. | Mocked here. Check the API terms and whether the attended list is exposed publicly before relying on it. |
 | Discogs | Public collection endpoint, no login: `GET /users/{name}/collection/folders/0/releases`. | Each release has `date_added`. The API allows browser calls. Send a descriptive User-Agent and expect rate limits. |
 | DICE | No fan-facing API found. | Its documented API is a partner-only GraphQL "Ticket Holders" API. Treat it as a partnership integration, or have fans forward ticket emails. |
 
