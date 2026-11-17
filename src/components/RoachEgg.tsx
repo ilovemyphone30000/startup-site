@@ -44,6 +44,28 @@ const LEG: string[] = [
   'M36 544l-10 12l22-4', 'M104 432q8-6 16 0',
 ]
 
+/** The same drawing, shrunk to a mouse pointer. The raised index finger is the click point. */
+function cursorUrl() {
+  const paths = (list: string[]) => list.map((d) => `<path d="${d}"/>`).join('')
+  const svg =
+    `<svg xmlns="http://www.w3.org/2000/svg" width="38" height="72" viewBox="0 0 300 570" fill="none" ` +
+    `stroke="#272727" stroke-width="15" stroke-linejoin="round" stroke-linecap="round">` +
+    `${paths(BODY)}${paths(LEG)}<g transform="translate(300 0) scale(-1 1)">${paths(LEG)}</g></svg>`
+  return `data:image/svg+xml,${encodeURIComponent(svg)}`
+}
+
+/** While mounted (the agent backend), the mouse pointer is the roach. Text fields keep the I-beam. */
+export function RoachCursor() {
+  useEffect(() => {
+    document.documentElement.classList.add('roach-cursor')
+    return () => document.documentElement.classList.remove('roach-cursor')
+  }, [])
+  return (
+    <style>{`.roach-cursor, .roach-cursor * { cursor: url("${cursorUrl()}") 8 19, auto !important; }
+.roach-cursor input, .roach-cursor textarea { cursor: text !important; }`}</style>
+  )
+}
+
 export function RoachEgg() {
   const [show, setShow] = useState(() => !seen() && !reducedMotion())
   const svgRef = useRef<SVGSVGElement>(null)
