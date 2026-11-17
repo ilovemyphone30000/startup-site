@@ -15,7 +15,7 @@ export const fans: Fan[] = Object.entries(byCity).flatMap(([cityId, handles]) =>
     id: `f-${cityId}-${i}`,
     handle,
     cityId,
-    dayOneArtistIds: i === 0 ? ['marigold-static'] : i === 3 ? ['cousin-orbit'] : [],
+    dayOneArtistIds: i === 0 ? ['samba-jean-baptiste'] : i === 3 ? ['westside-cowboy'] : [],
   })),
 )
 
@@ -26,4 +26,4 @@ export const SEED_LOGGED: LoggedShow[] = [
   { id: 'seed-3', showId: 'lb-austin-p', artistLabel: '', cityLabel: '', friends: 2, via: 2 },
 ]
 /** Day one badges the demo user starts with, from platform data. */
-export const SEED_DAY_ONE = ['marigold-static']
+export const SEED_DAY_ONE = ['samba-jean-baptiste']

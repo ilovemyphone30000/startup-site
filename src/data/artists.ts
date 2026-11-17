@@ -1,16 +1,16 @@
 import type { Artist } from './types'
 import { addDays } from '../lib/format'
 
-// All artists are fictional. The agent is fictional too.
+// The four names are placeholders for the class demo. Every date, venue, sales figure and
+// fan below is made up. Nothing here describes these artists' real shows or sales.
 export const AGENCY = 'Demo Agency (fictional)'
 
+const demo = (id: string, name: string, ig: string, early: number): Artist =>
+  ({ id, name, genre: 'Demo data', blurb: '', ig, earlyCutoff: addDays(early) })
+
 export const artists: Artist[] = [
-  { id: 'marigold-static', name: 'Marigold Static', genre: 'Dream pop, four piece', ig: 'marigold.static.demo',
-    blurb: 'Hazy guitars, big choruses. Sells out at home, quiet on the road.', earlyCutoff: addDays(-120) },
-  { id: 'late-bus-home', name: 'Late Bus Home', genre: 'Indie rock', ig: 'latebushome.demo',
-    blurb: 'Loud and sweet. Strong with students.', earlyCutoff: addDays(-200) },
-  { id: 'cousin-orbit', name: 'Cousin Orbit', genre: 'Electronic duo', ig: 'cousin.orbit.demo',
-    blurb: 'Live drums over synth loops. Great late sets.', earlyCutoff: addDays(-90) },
-  { id: 'tin-cathedral-choir', name: 'Tin Cathedral Choir', genre: 'Chamber folk punk', ig: 'tincathedral.demo',
-    blurb: 'Eight people, one stage, no amps.', earlyCutoff: addDays(-150) },
+  demo('samba-jean-baptiste', 'Samba Jean-Baptiste', 'sambajb.demo', -120),
+  demo('greg-freeman', 'Greg Freeman', 'gregfreeman.demo', -200),
+  demo('westside-cowboy', 'Westside Cowboy', 'westsidecowboy.demo', -90),
+  demo('telescreens', 'Telescreens', 'telescreens.demo', -150),
 ]
