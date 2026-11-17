@@ -34,6 +34,19 @@ function ShowCard({ show, artist, handle, mine, notify, onBuy }: {
   const copy = async (what: string, t: string) =>
     notify((await copyText(t)) ? `${what} copied.` : 'Could not copy. Select the text and copy it by hand.')
 
+  // Open the phone's share sheet where it exists, otherwise copy the message.
+  const share = async () => {
+    try {
+      if (typeof navigator.share === 'function') {
+        await navigator.share({ text })
+        return notify('Shared.')
+      }
+    } catch (e) {
+      if ((e as DOMException)?.name === 'AbortError') return
+    }
+    copy('Message', text)
+  }
+
   return (
     <article className="border-b border-ink px-4 py-4" aria-label={`${artist?.name} in ${cityName(show.cityId)}`}>
       <h3 className="m-0 font-bold">{artist?.name ?? 'Unknown artist'}</h3>
@@ -49,7 +62,7 @@ function ShowCard({ show, artist, handle, mine, notify, onBuy }: {
         <button className="btn btn-sm" onClick={() => copy('Link', link)}>Copy</button>
       </div>
       <div className="mt-3 flex flex-wrap gap-2">
-        <button className="btn btn-solid btn-sm" onClick={() => copy('Message', text)}>Share to group chat</button>
+        <button className="btn btn-solid btn-sm" onClick={share}>Share</button>
         <button className="btn btn-sm" aria-pressed={qr} onClick={() => setQr(!qr)}>{qr ? 'Hide QR' : 'Show QR'}</button>
       </div>
       {qr && <div className="mt-3"><QR text={link} label={`QR code for your link to ${artist?.name} in ${cityName(show.cityId)}`} /></div>}

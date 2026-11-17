@@ -120,25 +120,13 @@ export default function Landing() {
         </>
       }
     >
-      <Section id="problem" title="The problem" note="Home shows sell out. The road does not.">
+      <Section id="problem" title="The problem" note="Home shows sell out. The road does not." open>
         <div className="grid gap-8 md:grid-cols-2">
           <SeatGrid sold={home.sold} capacity={home.capacity} label="Home market show"
             caption={`${cityName(home.cityId)}: sold out, ${home.sold} of ${home.capacity}`} />
           <SeatGrid sold={away.sold} capacity={away.capacity} label="Secondary market show"
             caption={`${cityName(away.cityId)}: ${away.sold} of ${away.capacity} sold, ${daysUntil(away.date)} days out`} />
         </div>
-        <p className="mt-6 max-w-2xl">
-          Close to show date, teams reach for the same list: city-specific posts, "tickets still available" reminders,
-          last-minute discount codes, geo-targeted ads, street teams and local promoters. Meanwhile the superfans and students
-          who actually bring friends drive real sales, and nobody tracks or rewards them.
-        </p>
-        <h3 className="mb-2 mt-6 font-bold">What we heard in interviews (paraphrased, no quotes)</h3>
-        <ul className="m-0 grid max-w-2xl gap-2 pl-5">
-          <li>Fans find shows through friends and group chats. A friend texting 30 minutes before doors can be the whole reason someone buys.</li>
-          <li>Shows posted only on Instagram are easy to miss. Fans want more in-person promotion.</li>
-          <li>Agents say the ad budget runs out in B-markets and then there is nothing left to try. Radio giveaways barely help, and college radio contacts turn over every year.</li>
-          <li>Local curators and friends drive attendance. DIY spaces are disappearing, and unrewarded promotion burns out.</li>
-        </ul>
       </Section>
 
       <Section id="how" title="How it works" note="Two sides. The fan app is free. Agents bring whole rosters.">
