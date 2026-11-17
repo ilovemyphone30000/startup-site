@@ -1,0 +1,45 @@
+@import "tailwindcss";
+
+/* OJAS look: off-white ground, near-black ink, no accent. One functional red for "at risk". */
+@theme {
+  --color-paper: #f8f8f8;
+  --color-ink: #272727;
+  --color-mute: #595959;
+  --color-risk: #b3121f;
+  --font-mono: "Courier Prime", ui-monospace, "SFMono-Regular", Menlo, monospace;
+  --font-sans: Helvetica, "Helvetica Neue", Arial, system-ui, sans-serif;
+  --font-display: "Anton", Impact, "Arial Narrow", sans-serif;
+}
+
+html { background: var(--color-paper); }
+body {
+  margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-mono);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible { outline: 3px solid var(--color-ink); outline-offset: 2px; }
+
+@layer components {
+  .btn {
+    display: inline-block; border: 1px solid var(--color-ink); padding: 0.5rem 1rem;
+    font-family: var(--font-mono); font-size: 1rem; line-height: 1.25; background: transparent;
+    color: var(--color-ink); cursor: pointer; text-decoration: none; text-align: center;
+  }
+  .btn:hover, .btn[aria-pressed="true"], .btn[aria-current="true"] { background: var(--color-ink); color: var(--color-paper); }
+  .btn-solid { background: var(--color-ink); color: var(--color-paper); }
+  .btn-solid:hover { background: var(--color-paper); color: var(--color-ink); }
+  .btn-sm { padding: 0.25rem 0.6rem; font-size: 0.875rem; }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .field { display: block; width: 100%; border: 1px solid var(--color-ink); background: var(--color-paper);
+    padding: 0.45rem 0.55rem; font: inherit; border-radius: 0; }
+  .label { display: block; font-size: 0.875rem; margin-bottom: 0.2rem; }
+  .tbl { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  .tbl th { text-align: left; font-weight: 700; padding: 0.4rem 0.6rem; border-bottom: 2px solid var(--color-ink); white-space: nowrap; }
+  .tbl td { padding: 0.4rem 0.6rem; border-bottom: 1px solid var(--color-ink); vertical-align: top; }
+  .tbl td.num, .tbl th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .cell { border-left: 1px solid var(--color-ink); padding: 0.75rem 1rem; }
+}
