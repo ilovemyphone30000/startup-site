@@ -495,6 +495,37 @@ function TorchTab({ notify }: { notify: (m: string) => void }) {
   )
 }
 
+/* ---------- Score meter ---------- */
+
+const METER_MAX = 600 // top rung of the ladder
+
+/** Bold black bar from 0 to the top tier, with a tick at every benchmark. */
+function ScoreMeter({ score }: { score: number }) {
+  const marks = [...LADDER.map((t) => ({ at: t.at, name: t.name })), { at: TORCH_MIN_SCORE, name: 'Pass the torch' }]
+    .sort((a, b) => a.at - b.at)
+  const left = (n: number) => `${(n / METER_MAX) * 100}%`
+  return (
+    <div className="mt-3">
+      <div className="relative pb-7 pt-2">
+        <div role="meter" aria-label={`Fan Score ${score} on a scale of 0 to ${METER_MAX}`} aria-valuemin={0} aria-valuemax={METER_MAX}
+          aria-valuenow={Math.min(score, METER_MAX)} className="h-6 w-full border-2 border-ink bg-paper">
+          <div className="h-full bg-ink" style={{ width: `${Math.min(100, (score / METER_MAX) * 100)}%` }} />
+        </div>
+        {marks.map((m) => (
+          <span key={m.at} aria-hidden="true" className="absolute top-0 block h-10 w-0.5 -translate-x-1/2 bg-ink" style={{ left: left(m.at) }} />
+        ))}
+        {marks.map((m) => (
+          <span key={`n${m.at}`} aria-hidden="true" style={{ left: left(m.at) }}
+            className={`absolute top-10 text-xs font-bold ${m.at >= METER_MAX ? '-translate-x-full' : '-translate-x-1/2'}`}>
+            {m.at}
+          </span>
+        ))}
+      </div>
+      <p className="m-0 text-xs">{marks.map((m) => `${m.at} ${m.name}`).join(', ')}</p>
+    </div>
+  )
+}
+
 /* ---------- Page ---------- */
 
 export default function Fan() {
@@ -515,7 +546,7 @@ export default function Fan() {
           <p className="m-0 text-sm">Fan Score</p>
           <p className="m-0 text-5xl font-bold leading-none" aria-label={`Fan Score ${score}`}>{score}</p>
           <p className="mb-2 mt-2 text-sm">{cur ? cur.name : 'No tier yet'}{next ? `. Next: ${next.name} at ${next.at}.` : '. Top tier.'}</p>
-          {next && <Bar value={score} max={next.at} label={`Fan Score ${score} of ${next.at} for ${next.name}`} />}
+          <ScoreMeter score={score} />
           <div className="mt-3 max-w-xs">
             <Field label="Your city or campus">
               <select className="field" value={s.fan.cityId} onChange={(e) => patchFan({ cityId: e.target.value })}>
