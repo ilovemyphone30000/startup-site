@@ -544,8 +544,11 @@ export default function Fan() {
       <div className="fan-view mx-auto max-w-2xl md:border-x md:border-ink">
         <div className="border-b-2 border-ink bg-accent px-4 py-4">
           <p className="m-0 text-sm">Fan Score</p>
-          <p className="m-0 text-5xl font-bold leading-none" aria-label={`Fan Score ${score}`}>{score}</p>
-          <p className="mb-2 mt-2 text-sm">{cur ? cur.name : 'No tier yet'}{next ? `. Next: ${next.name} at ${next.at}.` : '. Top tier.'}</p>
+          <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
+            <p className="m-0 text-5xl font-bold leading-none" aria-label={`Fan Score ${score}`}>{score}</p>
+            <p className="m-0 text-2xl font-bold leading-none">{cur ? cur.name : 'No tier yet'}</p>
+          </div>
+          <p className="mb-2 mt-2 text-sm">{next ? `Next: ${next.name} at ${next.at}.` : 'Top tier.'}</p>
           <ScoreMeter score={score} />
           <div className="mt-3 max-w-xs">
             <Field label="Your city or campus">
