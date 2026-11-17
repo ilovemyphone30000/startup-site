@@ -508,11 +508,10 @@ export default function Fan() {
     <Page art={56} hero={
       <>
         <h1 className="m-0 text-xl font-bold">Fan app demo</h1>
-        <p className="mb-0 mt-2 text-sm">Built for your phone. Pick a city, share a show, watch your Fan Score grow. <DemoTag /></p>
       </>
     }>
-      <div className="mx-auto max-w-2xl md:border-x md:border-ink">
-        <div className="border-b-2 border-ink px-4 py-4">
+      <div className="fan-view mx-auto max-w-2xl md:border-x md:border-ink">
+        <div className="border-b-2 border-ink bg-accent px-4 py-4">
           <p className="m-0 text-sm">Fan Score</p>
           <p className="m-0 text-5xl font-bold leading-none" aria-label={`Fan Score ${score}`}>{score}</p>
           <p className="mb-2 mt-2 text-sm">{cur ? cur.name : 'No tier yet'}{next ? `. Next: ${next.name} at ${next.at}.` : '. Top tier.'}</p>

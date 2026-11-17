@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Page } from '../components/Layout'
-import { DemoTag, Field, Table } from '../components/ui'
+import { Field, Table } from '../components/ui'
 import { PRICING } from '../config'
 import { artists } from '../data/artists'
 import { getReferrals, getShows, inWindow } from '../lib/derive'
@@ -29,7 +29,6 @@ export default function Partner() {
     <Page art={56} hero={
       <>
         <h1 className="m-0 text-xl font-bold">Partner view</h1>
-        <p className="mb-0 mt-2 text-sm">The reseller version of the agent backend: a promoter, label or agency with several artist clients. <DemoTag /></p>
       </>
     }>
       <div className="grid gap-8 px-4 py-6 md:px-6 lg:grid-cols-2">

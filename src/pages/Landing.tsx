@@ -106,21 +106,19 @@ export default function Landing() {
     <Page
       hero={
         <>
-          <h1 className="m-0 text-2xl font-bold leading-tight">Superfans fill the room. You pay only for tickets that sell.</h1>
-          <p className="mb-0 mt-4">
+          <h1 className="m-0 font-normal">
             {NAME} is a fan-powered ticket promotion platform for developing artists. When a show is selling slowly in a
             secondary or college market, we activate the local superfans and students who already bring friends, track every
             ticket they drive, and reward them. Booking agents and managers pay per ticket that sells. Fans pay nothing.
-          </p>
+          </h1>
           <div className="mt-5 flex flex-wrap gap-3">
             <Link className="btn btn-solid" to="/fan">I'm a fan</Link>
             <Link className="btn" to="/agent">I'm an agent / manager</Link>
           </div>
-          <p className="mb-0 mt-3 text-sm text-mute">Class project prototype. Everything you see is demo data.</p>
         </>
       }
     >
-      <Section id="problem" title="The problem" note="Home shows sell out. The road does not." open>
+      <Section id="problem" title="The problem" open>
         <div className="grid gap-8 md:grid-cols-2">
           <SeatGrid sold={home.sold} capacity={home.capacity} label="Home market show"
             caption={`${cityName(home.cityId)}: sold out, ${home.sold} of ${home.capacity}`} />
@@ -129,7 +127,7 @@ export default function Landing() {
         </div>
       </Section>
 
-      <Section id="how" title="How it works" note="Two sides. The fan app is free. Agents bring whole rosters.">
+      <Section id="how" title="How it works">
         <div className="grid gap-8 md:grid-cols-2">
           <Steps title="For fans" steps={[
             'Pick your city or campus and a show you are going to.',
@@ -184,7 +182,7 @@ export default function Landing() {
         </ul>
       </Section>
 
-      <Section id="waitlist" title="Waitlist" note="Two forms. Pick your side.">
+      <Section id="waitlist" title="Waitlist">
         <Waitlist />
       </Section>
     </Page>
