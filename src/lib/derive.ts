@@ -1,6 +1,6 @@
 import { artists as baseArtists } from '../data/artists'
 import { shows as baseShows } from '../data/shows'
-import { fans as baseFans, SEED_DAY_ONE } from '../data/fans'
+import { fans as baseFans, SEED_DAY_ONE, SEED_DAY_ONE_DETAILS } from '../data/fans'
 import { referrals as baseReferrals } from '../data/referrals'
 import { LADDER } from '../data/rewards'
 import type { Artist, Fan, Referral, Show, State } from '../data/types'
@@ -99,6 +99,29 @@ export function fanStats(s: State) {
   ]
   const score = rows.reduce((a, r) => a + r.pts, 0)
   return { rows, score, ticketsDriven, attended, friends, artistCount: artistKeys.size, dayOne: [...dayOne], verified, firstSeen }
+}
+
+/** For each Day one artist: when the fan first followed and first went to a show. */
+export function dayOneDetails(s: State) {
+  const arts = getArtists(s)
+  const byId = new Map(getShows(s).map((x) => [x.id, x]))
+  const out = new Map<string, { followed?: string; firstShow?: string }>()
+  for (const [id, d] of Object.entries(SEED_DAY_ONE_DETAILS)) out.set(id, { ...d })
+  for (const sg of s.fan.signals) {
+    const a = matchArtist(sg.artist, arts)
+    if (!a || SEED_DAY_ONE_DETAILS[a.id]) continue
+    const cur = out.get(a.id) ?? {}
+    if (!cur.followed || sg.firstSeen < cur.followed) cur.followed = sg.firstSeen
+    out.set(a.id, cur)
+  }
+  for (const l of s.fan.logged) {
+    const sh = l.showId ? byId.get(l.showId) : undefined
+    if (!sh || SEED_DAY_ONE_DETAILS[sh.artistId]) continue
+    const cur = out.get(sh.artistId) ?? {}
+    if (!cur.firstShow || sh.date < cur.firstShow) cur.firstShow = sh.date
+    out.set(sh.artistId, cur)
+  }
+  return out
 }
 
 export function tierFor(score: number) {
