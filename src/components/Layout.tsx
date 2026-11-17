@@ -6,7 +6,7 @@ import { Engraving } from './Engraving'
 const LINKS = [
   ['/', 'Home', true],
   ['/fan', 'Fan app demo', false],
-  ['/agent', 'Agent backend', false],
+  ['/agent', 'Agent/Artist Backend', false],
   ['/partner', 'Partner view', false],
 ] as const
 
@@ -46,7 +46,7 @@ export function SiteFooter() {
     <footer className="border-t-2 border-ink px-4 py-6 text-sm md:px-6">
       <p className="m-0 max-w-3xl">{CLASS_FOOTER}</p>
       <p className="m-0 mt-2 max-w-3xl text-mute">
-        All people, artists, venues and numbers on this site are fictional demo data. Nothing you enter is sent anywhere. It stays in this browser.
+        Fans, venues, dates and all numbers on this site are fictional demo data. The four artist names are placeholders for the class demo, and nothing here describes their real shows or sales. Nothing you enter is sent anywhere. It stays in this browser.
       </p>
     </footer>
   )
