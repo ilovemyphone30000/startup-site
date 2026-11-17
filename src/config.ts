@@ -28,6 +28,9 @@ export const SCORE_WEIGHTS = {
   dayOne: 15,
 }
 
+// Fans can only pass the torch (hand their campus to a younger fan) from this Fan Score up.
+export const TORCH_MIN_SCORE = 500
+
 // "At risk" rule: low sell-through close to show date.
 export const RISK = {
   nearDays: 14,
