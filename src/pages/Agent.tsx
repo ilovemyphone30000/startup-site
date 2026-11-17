@@ -2,7 +2,6 @@ import { useState, type FormEvent } from 'react'
 import { Page } from '../components/Layout'
 import { Bar, DemoTag, Field, RiskFlag, Table } from '../components/ui'
 import { PRICING, TICKET_PRICE, directPerTicket } from '../config'
-import { AGENCY } from '../data/artists'
 import { cities, cityName } from '../data/cities'
 import type { Show } from '../data/types'
 import {
@@ -352,8 +351,7 @@ export default function Agent() {
   return (
     <Page art={56} hero={
       <>
-        <h1 className="m-0 text-xl font-bold">Agent backend</h1>
-        <p className="mb-0 mt-2 text-sm">{AGENCY}. Desktop first. Everything here is demo data, and fan activity from the fan app shows up here. <DemoTag /></p>
+        <h1 className="m-0 text-xl font-bold">Agent/Artist Backend</h1>
       </>
     }>
       <div className="grid md:grid-cols-[190px_1fr]">

@@ -65,7 +65,6 @@ export default function Partner() {
             Margin is {money(margin)} per ticket. If the {money(PRICING.resellerMonthly)} monthly fee is not passed on to artists,
             a partner breaks even at {breakEven} referred tickets a month.
           </p>
-          <p className="m-0 text-xs text-mute">Pricing from the channel deck, assuming a $25 ticket. Fraud controls apply here too (mocked).</p>
         </div>
       </div>
     </Page>

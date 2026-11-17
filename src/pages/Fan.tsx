@@ -2,7 +2,7 @@ import { useState, type FormEvent } from 'react'
 import { Page } from '../components/Layout'
 import { Bar, DemoTag, Field, Table } from '../components/ui'
 import { QR } from '../components/QR'
-import { NAME, REF_HOST, SCORE_WEIGHTS } from '../config'
+import { NAME, REF_HOST, SCORE_WEIGHTS, TORCH_MIN_SCORE } from '../config'
 import { LADDER } from '../data/rewards'
 import { cityName, fanCities } from '../data/cities'
 import { sampleInstagramJson, sampleSignals, sampleSpotifyJson } from '../data/samples'
@@ -449,6 +449,20 @@ function TorchTab({ notify }: { notify: (m: string) => void }) {
     if (!to) return
     patchFan({ torch: { to, cityId: String(f.get('city')), note: String(f.get('note')).trim(), at: new Date().toISOString() } })
     notify('Invite created. Demo only, nothing was sent.')
+  }
+  const { score } = fanStats(s)
+  if (!t && score < TORCH_MIN_SCORE) {
+    return (
+      <div className="grid gap-3 px-4 py-5">
+        <p className="m-0 text-sm">Graduating? Hand your campus to a younger fan so the crew you built keeps showing up.</p>
+        <div className="border border-ink p-3">
+          <p className="m-0 font-bold">Locked until {TORCH_MIN_SCORE} Fan Score</p>
+          <p className="mb-2 mt-1 text-sm">You can only pass the torch once you have proven you can run a campus.</p>
+          <Bar value={score} max={TORCH_MIN_SCORE} label={`Fan Score ${score} of ${TORCH_MIN_SCORE} to unlock Pass the torch`} />
+          <p className="mb-0 mt-1 text-sm">{score} of {TORCH_MIN_SCORE}. {TORCH_MIN_SCORE - score} points to go.</p>
+        </div>
+      </div>
+    )
   }
   return (
     <div className="grid gap-4 px-4 py-5">
