@@ -8,7 +8,7 @@ import { cityName, fanCities } from '../data/cities'
 import { sampleInstagramJson, sampleSignals, sampleSpotifyJson } from '../data/samples'
 import type { Artist, Show, SourceId } from '../data/types'
 import { copyText } from '../lib/clipboard'
-import { fanStats, getArtists, getShows, leaderboard, matchArtist, myShowTickets, seatsLeft, tierFor, YOU } from '../lib/derive'
+import { dayOneDetails, fanStats, getArtists, getShows, leaderboard, matchArtist, myShowTickets, seatsLeft, tierFor, YOU } from '../lib/derive'
 import { daysUntil, fmtDate, fmtDateLong, norm, slug, uid } from '../lib/format'
 import { mergeSignals, parseInstagram, parseSpotify } from '../lib/importers'
 import { getState, patchFan, resetAll, useStore } from '../lib/store'
@@ -228,6 +228,25 @@ function ScoreTab({ notify }: { notify: (m: string) => void }) {
         </Table>
       </section>
 
+      <section aria-labelledby="badge-h">
+        <h3 id="badge-h" className="m-0 mb-2 font-bold">My badges</h3>
+        <ul className="m-0 grid list-none gap-2 p-0">
+          {stats.dayOne.map((id) => {
+            const d = dayOneDetails(s).get(id)
+            return (
+              <li key={id} className="border-2 border-ink p-3">
+                <span className="mr-2 inline-block bg-ink px-2 text-sm font-bold uppercase text-paper">Day one</span>
+                <strong>{arts.get(id)?.name ?? id}</strong>
+                <p className="mb-0 mt-1 text-sm">
+                  First followed: {d?.followed ? fmtDateLong(d.followed) : 'not found yet'}<br />
+                  First show: {d?.firstShow ? fmtDateLong(d.firstShow) : 'not logged yet'}
+                </p>
+              </li>
+            )
+          })}
+        </ul>
+      </section>
+
       <section aria-labelledby="imp-h">
         <h3 id="imp-h" className="m-0 font-bold">My impact</h3>
         <p className="mb-3 mt-1 text-sm">Running total: <strong>{stats.ticketsDriven} tickets driven</strong>. Your credit counts for every artist on {NAME}.</p>
@@ -294,6 +313,9 @@ const SOURCES: SourceDef[] = [
   { id: 'discogs', name: 'Discogs', gives: 'Records owned and when they were added',
     how: 'Public collections can be read without login and every release has a date added. A live call from the browser is feasible later. Mocked here.',
     sample: () => sampleSignals.discogs },
+  { id: 'setlistfm', name: 'Setlist.fm', gives: 'Concerts attended, with dates',
+    how: 'Setlist.fm keeps a list of the concerts each member has attended, with dates, and has a public API with a free key. That gives us a first-show date per artist. Mocked here.',
+    sample: () => sampleSignals.setlistfm },
   { id: 'dice', name: 'DICE', gives: 'Past tickets',
     how: 'DICE has no fan-facing API. Its documented API is partner only, so this is a partnership integration, or fans forward ticket emails. Mocked here.',
     sample: () => sampleSignals.dice },
@@ -575,15 +597,12 @@ export default function Fan() {
         <section aria-labelledby="quick-h" className="border-2 border-ink px-4 py-4">
           <h2 id="quick-h" className="m-0 text-base font-bold">Add your data</h2>
           <p className="mb-3 mt-1 text-sm">Your Fan Score grows with what you add. Start here.</p>
-          <div className="grid gap-2 sm:grid-cols-3">
+          <div className="grid gap-2 sm:grid-cols-2">
             <button className="btn btn-solid text-left" onClick={() => go('score')}>
               <span className="block font-bold">Log a show</span><span className="block text-xs">One you went to</span>
             </button>
             <button className="btn text-left" onClick={() => go('sources')}>
-              <span className="block font-bold">Connect accounts</span><span className="block text-xs">Spotify, Instagram, more</span>
-            </button>
-            <button className="btn text-left" onClick={() => go('score')}>
-              <span className="block font-bold">Set your handle</span><span className="block text-xs">Used in share links</span>
+              <span className="block font-bold">Connect accounts</span><span className="block text-xs">Spotify, Instagram, Discogs, Setlist.fm</span>
             </button>
           </div>
         </section>
