@@ -13,7 +13,7 @@ A static site with two parts, built to look real for a class presentation and to
 
 Fan and agent sides share one small localStorage store, so a friend purchase in the fan app shows up in the agent attribution table, and a tour date an agent enters shows up in the fan feed.
 
-Look: the OJAS look from the aesthetics library (off-white, near-black, typewriter mono, Helvetica links, fat condensed wordmark, original engraved ticket border). The one color exception is the red "at risk" flag.
+Look: the OJAS look from the aesthetics library (off-white, near-black, typewriter mono, Helvetica links, fat condensed wordmark, original engraved moose border). The one color exception is the red "at risk" flag.
 
 ## Run it
 
