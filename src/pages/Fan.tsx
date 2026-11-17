@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from 'react'
+import { useRef, useState, type FormEvent } from 'react'
 import { Page } from '../components/Layout'
 import { Bar, DemoTag, Field, Table } from '../components/ui'
 import { QR } from '../components/QR'
@@ -15,7 +15,7 @@ import { getState, patchFan, resetAll, useStore } from '../lib/store'
 
 
 const TABS = [
-  ['shows', 'Shows'], ['score', 'My score'], ['sources', 'Sources'],
+  ['shows', 'Shows'], ['score', 'My data'], ['sources', 'Sources'],
   ['rewards', 'Rewards'], ['board', 'Leaderboard'], ['torch', 'Pass the torch'],
 ] as const
 type Tab = (typeof TABS)[number][0]
@@ -100,7 +100,9 @@ function ShowsTab({ notify }: { notify: (m: string) => void }) {
 
   return (
     <div>
-      <p className="m-0 border-b border-ink px-4 py-2 text-sm">Upcoming shows in {cityName(s.fan.cityId)} <DemoTag /></p>
+      <h2 className="m-0 flex flex-wrap items-center justify-between gap-2 border-b-2 border-ink px-4 py-3 text-base font-bold">
+        <span>Upcoming shows in {cityName(s.fan.cityId)}</span> <DemoTag />
+      </h2>
       {feed.length === 0 && <p className="px-4 py-6">No upcoming shows here yet. Try another city.</p>}
       {feed.map((sh) => (
         <ShowCard key={sh.id} show={sh} artist={arts.get(sh.artistId)} handle={s.fan.handle || 'you.demo'}
@@ -144,7 +146,7 @@ function LogForm({ notify }: { notify: (m: string) => void }) {
 
   return (
     <form onSubmit={submit} className="grid gap-3" aria-labelledby="log-h">
-      <h3 id="log-h" className="m-0 font-bold">Log a show you went to</h3>
+      <h4 id="log-h" className="m-0 font-bold">2. Log a show you went to</h4>
       <Field label="Show">
         <select className="field" value={pick} onChange={(e) => setPick(e.target.value)} required>
           <option value="" disabled>Pick one</option>
@@ -199,6 +201,20 @@ function ScoreTab({ notify }: { notify: (m: string) => void }) {
 
   return (
     <div className="grid gap-8 px-4 py-5">
+      <section aria-labelledby="add-h" className="grid gap-6 border-2 border-ink p-4">
+        <div>
+          <h3 id="add-h" className="m-0 text-lg font-bold">Add your data</h3>
+          <p className="mb-0 mt-1 text-sm">Fill these in and your Fan Score updates right away. Nothing leaves this browser.</p>
+        </div>
+        <section aria-labelledby="prof-h" className="grid gap-3">
+          <h4 id="prof-h" className="m-0 font-bold">1. Your handle</h4>
+          <Field label="Used in your share links">
+            <input className="field" maxLength={24} value={s.fan.handle} onChange={(e) => patchFan({ handle: e.target.value })} autoComplete="off" />
+          </Field>
+        </section>
+        <LogForm notify={notify} />
+      </section>
+
       <section aria-labelledby="bd-h">
         <h3 id="bd-h" className="m-0 mb-2 font-bold">How your Fan Score adds up</h3>
         <Table>
@@ -237,8 +253,6 @@ function ScoreTab({ notify }: { notify: (m: string) => void }) {
         <p className="mb-0 mt-3 text-xs text-mute">Day one: among the first supporters of an artist, by follow or first listen before the artist's early cutoff. Verified from your imported accounts.</p>
       </section>
 
-      <LogForm notify={notify} />
-
       <section aria-labelledby="hist-h">
         <h3 id="hist-h" className="m-0 mb-2 font-bold">Shows I have logged</h3>
         <ul className="m-0 list-none p-0">
@@ -256,13 +270,7 @@ function ScoreTab({ notify }: { notify: (m: string) => void }) {
         </ul>
       </section>
 
-      <section aria-labelledby="prof-h" className="grid gap-3">
-        <h3 id="prof-h" className="m-0 font-bold">Profile</h3>
-        <Field label="Your handle (used in your links)">
-          <input className="field" maxLength={24} value={s.fan.handle} onChange={(e) => patchFan({ handle: e.target.value })} autoComplete="off" />
-        </Field>
-        <div><button className="btn btn-sm" onClick={() => { resetAll(); notify('Demo data reset.') }}>Reset all demo data</button></div>
-      </section>
+      <div><button className="btn btn-sm" onClick={() => { resetAll(); notify('Demo data reset.') }}>Reset all demo data</button></div>
     </div>
   )
 }
@@ -534,6 +542,11 @@ export default function Fan() {
   const [msg, setMsg] = useState('')
   const { score } = fanStats(s)
   const { cur, next } = tierFor(score)
+  const tabsRef = useRef<HTMLDivElement>(null)
+  const go = (t: Tab) => {
+    setTab(t)
+    requestAnimationFrame(() => tabsRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }))
+  }
 
   return (
     <Page art={56} hero={
@@ -541,8 +554,8 @@ export default function Fan() {
         <h1 className="m-0 text-xl font-bold">Fan app demo</h1>
       </>
     }>
-      <div className="fan-view mx-auto max-w-2xl md:border-x md:border-ink">
-        <div className="border-b-2 border-ink bg-accent px-4 py-4">
+      <div className="fan-view mx-auto grid max-w-2xl gap-5 px-4 py-5">
+        <section aria-label="Your Fan Score" className="border-2 border-ink bg-accent px-4 py-4">
           <p className="m-0 text-sm">Fan Score</p>
           <div className="flex flex-wrap items-baseline gap-x-4 gap-y-1">
             <p className="m-0 text-5xl font-bold leading-none" aria-label={`Fan Score ${score}`}>{score}</p>
@@ -557,7 +570,25 @@ export default function Fan() {
               </select>
             </Field>
           </div>
-        </div>
+        </section>
+
+        <section aria-labelledby="quick-h" className="border-2 border-ink px-4 py-4">
+          <h2 id="quick-h" className="m-0 text-base font-bold">Add your data</h2>
+          <p className="mb-3 mt-1 text-sm">Your Fan Score grows with what you add. Start here.</p>
+          <div className="grid gap-2 sm:grid-cols-3">
+            <button className="btn btn-solid text-left" onClick={() => go('score')}>
+              <span className="block font-bold">Log a show</span><span className="block text-xs">One you went to</span>
+            </button>
+            <button className="btn text-left" onClick={() => go('sources')}>
+              <span className="block font-bold">Connect accounts</span><span className="block text-xs">Spotify, Instagram, more</span>
+            </button>
+            <button className="btn text-left" onClick={() => go('score')}>
+              <span className="block font-bold">Set your handle</span><span className="block text-xs">Used in share links</span>
+            </button>
+          </div>
+        </section>
+
+        <div ref={tabsRef} className="scroll-mt-4 border-2 border-ink">
         <nav aria-label="Fan app sections" className="flex gap-2 overflow-x-auto border-b border-ink px-4 py-2">
           {TABS.map(([id, label]) => (
             <button key={id} className="btn btn-sm whitespace-nowrap" aria-current={tab === id} onClick={() => setTab(id)}>{label}</button>
@@ -570,6 +601,7 @@ export default function Fan() {
         {tab === 'rewards' && <RewardsTab />}
         {tab === 'board' && <BoardTab />}
         {tab === 'torch' && <TorchTab notify={setMsg} />}
+        </div>
       </div>
     </Page>
   )
