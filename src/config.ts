@@ -43,3 +43,5 @@ export const RISK = {
 export const MONTH_WINDOW = { from: -30, to: 30 }
 
 export const STORE_KEY = 'demo.v1'
+// Remembers that the first-visit easter egg has played. Cleared by "Reset all demo data".
+export const EGG_ROACH_KEY = 'demo.egg.roach'
