@@ -37,4 +37,7 @@ export const shows: Show[] = [
   s('tc-burlington', 'telescreens', 'burlington', 'Halfmoon Room', 29, 200, 95),
   s('tc-la', 'telescreens', 'la', 'Lantern Yard', 33, 500, 470),
   s('tc-richmond-p', 'telescreens', 'richmond', 'The Annex', -30, 350, 339),
+  // Geese
+  s('ge-richmond', 'geese', 'richmond', 'The Annex', 15, 350, 130),
+  s('ge-austin', 'geese', 'austin', 'Pale Door', 27, 450, 200),
 ]

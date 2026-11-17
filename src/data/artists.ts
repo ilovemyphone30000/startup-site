@@ -13,4 +13,5 @@ export const artists: Artist[] = [
   demo('greg-freeman', 'Greg Freeman', 'gregfreeman.demo', -200),
   demo('westside-cowboy', 'Westside Cowboy', 'westsidecowboy.demo', -90),
   demo('telescreens', 'Telescreens', 'telescreens.demo', -150),
+  demo('geese', 'Geese', 'geese.demo', -200),
 ]

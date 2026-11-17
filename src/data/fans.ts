@@ -26,4 +26,9 @@ export const SEED_LOGGED: LoggedShow[] = [
   { id: 'seed-3', showId: 'lb-austin-p', artistLabel: '', cityLabel: '', friends: 2, via: 2 },
 ]
 /** Day one badges the demo user starts with, from platform data. */
-export const SEED_DAY_ONE = ['samba-jean-baptiste']
+export const SEED_DAY_ONE = ['samba-jean-baptiste', 'geese']
+/** Sample dates for the demo Day one badges: when the fan first followed, and first went to a show. */
+export const SEED_DAY_ONE_DETAILS: Record<string, { followed: string; firstShow: string }> = {
+  'samba-jean-baptiste': { followed: '2025-01-09', firstShow: '2025-03-22' },
+  geese: { followed: '2024-08-03', firstShow: '2024-10-19' },
+}

@@ -13,7 +13,7 @@ export interface Fan { id: string; handle: string; cityId: string; dayOneArtistI
 export interface Referral { fanId: string; showId: string; tickets: number }
 export interface Tier { id: string; name: string; at: number; perk: string }
 
-export type SourceId = 'spotify' | 'lastfm' | 'instagram' | 'discogs' | 'dice'
+export type SourceId = 'spotify' | 'lastfm' | 'instagram' | 'discogs' | 'dice' | 'setlistfm'
 export interface Signal { source: SourceId; artist: string; firstSeen: string; count: number }
 export interface SourceStatus { at: string; mode: 'sample' | 'file'; rows: number; fileName?: string }
 

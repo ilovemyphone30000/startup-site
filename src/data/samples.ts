@@ -10,7 +10,7 @@ const iso = (days: number) => new Date(Date.now() + days * 864e5).toISOString()
 export const sampleInstagramJson = () =>
   JSON.stringify({
     relationships_following: [
-      ['sambajb.demo', -300], ['gregfreeman.demo', -90], ['westsidecowboy.demo', -40],
+      ['geese.demo', -500], ['sambajb.demo', -300], ['gregfreeman.demo', -90], ['westsidecowboy.demo', -40],
       ['telescreens.demo', -400], ['some.other.account', -50],
     ].map(([value, d]) => ({
       title: '', media_list_data: [],
@@ -22,7 +22,7 @@ export const sampleInstagramJson = () =>
 export const sampleSpotifyJson = () => {
   const rows: object[] = []
   for (const [artist, first, plays] of [
-    ['Samba Jean-Baptiste', -310, 30], ['Greg Freeman', -250, 40], ['Westside Cowboy', -30, 12],
+    ['Geese', -520, 25], ['Samba Jean-Baptiste', -310, 30], ['Greg Freeman', -250, 40], ['Westside Cowboy', -30, 12],
     ['Telescreens', -100, 8], ['Some Other Band', -500, 20],
   ] as const) {
     for (let i = 0; i < plays; i++) {
@@ -39,8 +39,9 @@ const sig = (source: Signal['source'], artist: string, days: number, count: numb
   ({ source, artist, firstSeen: addDays(days), count })
 
 /** Mock connectors. No network calls happen anywhere. */
-export const sampleSignals: Record<'lastfm' | 'discogs' | 'dice', Signal[]> = {
+export const sampleSignals: Record<'lastfm' | 'discogs' | 'dice' | 'setlistfm', Signal[]> = {
   lastfm: [sig('lastfm', 'Telescreens', -420, 300), sig('lastfm', 'Westside Cowboy', -35, 120)],
   discogs: [sig('discogs', 'Westside Cowboy', -60, 2), sig('discogs', 'Samba Jean-Baptiste', -200, 1)],
+  setlistfm: [sig('setlistfm', 'Geese', -759, 1), sig('setlistfm', 'Samba Jean-Baptiste', -20, 1), sig('setlistfm', 'Greg Freeman', -14, 1)],
   dice: [sig('dice', 'Greg Freeman', -14, 1), sig('dice', 'Telescreens', -30, 1)],
 }
